@@ -11,13 +11,19 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 if ($requestMethod == "POST") {
     $inputData = json_decode(file_get_contents("php://input"), true);
-    if (isset($inputData['student_name']) && isset($inputData['subject_name'])) {
+    if (isset($inputData['student_id']) && isset($inputData['subject_id'])) {
         $response = registerStudentInSubject($inputData);
         echo $response;
     } else {
-        echo json_encode(["status" => 422, "message" => "Invalid Input"]);
+        $error = error422("Invalid input");
+        echo $error;
     }
 } else {
-    echo json_encode(["status" => 405, "message" => $requestMethod . " Method Not Allowed"]);
+    $data = [
+        'status' => 405,
+        'message' => $requestMethod . ' Method Not Allowed',
+    ];
+    header("HTTP/1.0 405 Method Not Allowed");
+    echo json_encode($data);
 }
 ?>

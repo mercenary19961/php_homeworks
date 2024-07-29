@@ -16,7 +16,7 @@ if ($requestMethod == 'GET') {
         $response = getStudentExams($studentName);
         echo $response;
     } else {
-        $error = error422("Please provide a subject name");
+        $error = error422("Please provide a student name");
         echo $error;
     }
 } else {

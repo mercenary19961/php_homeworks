@@ -18,10 +18,8 @@ if ($requestMethod == "PUT") {
         $response = updateExamScore($examId, $score);
         echo $response;
     } else {
-        echo json_encode([
-            "status" => 422, 
-            "message" => "Please provide exam ID and score"
-        ]);
+        $error = error422("Please provide exam ID and score");
+        echo $error;
     }
 } else {
     $data = [

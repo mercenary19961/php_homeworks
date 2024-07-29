@@ -12,18 +12,19 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 if ($requestMethod == 'GET') {
     if (isset($_GET['name'])) {
-        $studentName = $_GET['name'];
-        $response = getStudentSubjects(['name' => $studentName]);
+        $subjectName = $_GET['name'];
+        $response = getSubjectStudents(['name' => $subjectName]);
         echo $response;
     } else {
-        echo json_encode([
-            "status" => 422, 
-            "message" => "Please provide a student name"
-        ]);
+        $error = error422("Please provide a subject name");
+        echo $error;
     }
 } else {
-    echo json_encode([
-        "status" => 405, 
-        "message" => "$requestMethod Method Not Allowed"]);
+    $data = [
+        'status' => 405,
+        'message' => $requestMethod . ' Method Not Allowed',
+    ];
+    header("HTTP/1.0 405 Method Not Allowed");
+    echo json_encode($data);
 }
 ?>
